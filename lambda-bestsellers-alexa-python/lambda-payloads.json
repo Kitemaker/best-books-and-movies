@@ -1,0 +1,516 @@
+{
+    "bestsellers-alexa-python": {
+        "lambda": {
+            "version": "1.0",
+            "session": {
+                "new": false,
+                "sessionId": "amzn1.echo-api.session.e0263862-223b-4b98-b848-03091adc96f7",
+                "application": {
+                    "applicationId": "amzn1.ask.skill.dbbcf63d-4053-4792-b2b8-2990bbb1ff1d"
+                },
+                "attributes": {
+                    "movie_review_data": [
+                        {
+                            "display_title": "The Wandering Earth",
+                            "mpaa_rating": "",
+                            "critics_pick": 0,
+                            "byline": "BEN KENIGSBERG",
+                            "headline": "‘The Wandering Earth’ Review: Planetary Disaster Goes Global",
+                            "summary_short": "“The Wandering Earth” proves that China can make a sci-fi blockbuster as awash in murky computer imagery and stupefying exposition as any in Hollywood.",
+                            "publication_date": "2019-02-17",
+                            "opening_date": null,
+                            "date_updated": "2019-02-18 03:44:25",
+                            "link": {
+                                "type": "article",
+                                "url": "http://www.nytimes.com/2019/02/17/movies/the-wandering-earth-review.html",
+                                "suggested_link_text": "Read the New York Times Review of The Wandering Earth"
+                            },
+                            "multimedia": {
+                                "type": "mediumThreeByTwo210",
+                                "src": "https://static01.nyt.com/images/2019/02/18/arts/18wandering/merlin_150182592_a01dda3c-54da-48be-904d-826aba4078c4-mediumThreeByTwo210.jpg",
+                                "width": 210,
+                                "height": 140
+                            }
+                        },
+                        {
+                            "display_title": "The Breaker Upperers",
+                            "mpaa_rating": "",
+                            "critics_pick": 0,
+                            "byline": "BEN KENIGSBERG",
+                            "headline": "‘The Breaker Upperers’ Review: Calling It Off, With an Assist",
+                            "summary_short": "This New Zealand comedy by Jackie van Beek and Madeleine Sami adds some welcome irreverence to the homogenized mix of Netflix comedies.",
+                            "publication_date": "2019-02-15",
+                            "opening_date": null,
+                            "date_updated": "2019-02-15 14:04:02",
+                            "link": {
+                                "type": "article",
+                                "url": "http://www.nytimes.com/2019/02/15/movies/the-breaker-upperers-review.html",
+                                "suggested_link_text": "Read the New York Times Review of The Breaker Upperers"
+                            },
+                            "multimedia": {
+                                "type": "mediumThreeByTwo210",
+                                "src": "https://static01.nyt.com/images/2019/02/16/arts/16breaker/16breaker-mediumThreeByTwo210.jpg",
+                                "width": 210,
+                                "height": 140
+                            }
+                        },
+                        {
+                            "display_title": "A Tuba to Cuba",
+                            "mpaa_rating": "",
+                            "critics_pick": 1,
+                            "byline": "JEANNETTE CATSOULIS",
+                            "headline": "‘A Tuba to Cuba’ Review: A New Orleans Jazz Band Makes a Caribbean Connection",
+                            "summary_short": "This joyous documentary follows the Preservation Hall Jazz Band to Cuba for a celebration of musical history and common bonds.",
+                            "publication_date": "2019-02-14",
+                            "opening_date": "2019-02-15",
+                            "date_updated": "2019-02-18 03:44:24",
+                            "link": {
+                                "type": "article",
+                                "url": "http://www.nytimes.com/2019/02/14/movies/a-tuba-to-cuba-review.html",
+                                "suggested_link_text": "Read the New York Times Review of A Tuba to Cuba"
+                            },
+                            "multimedia": {
+                                "type": "mediumThreeByTwo210",
+                                "src": "https://static01.nyt.com/images/2019/02/15/arts/15tuba1/tuba1-mediumThreeByTwo210.jpg",
+                                "width": 210,
+                                "height": 140
+                            }
+                        },
+                        {
+                            "display_title": "Hotel by the River",
+                            "mpaa_rating": "",
+                            "critics_pick": 0,
+                            "byline": "BEN KENIGSBERG",
+                            "headline": "‘Hotel by the River’ Review: A Poet Makes Amends, Fumblingly",
+                            "summary_short": "The film is one of Hong Sang-soo’s most visually arresting movies, even if it doesn’t quite overcome the slightness that characterizes the director’s work.",
+                            "publication_date": "2019-02-14",
+                            "opening_date": "2019-02-15",
+                            "date_updated": "2019-02-18 03:44:25",
+                            "link": {
+                                "type": "article",
+                                "url": "http://www.nytimes.com/2019/02/14/movies/hotel-by-the-river-review.html",
+                                "suggested_link_text": "Read the New York Times Review of Hotel by the River"
+                            },
+                            "multimedia": {
+                                "type": "mediumThreeByTwo210",
+                                "src": "https://static01.nyt.com/images/2019/02/13/arts/hotel1/hotel1-mediumThreeByTwo210.jpg",
+                                "width": 210,
+                                "height": 140
+                            }
+                        },
+                        {
+                            "display_title": "Parkland: Inside Building 12",
+                            "mpaa_rating": "Not Rated",
+                            "critics_pick": 0,
+                            "byline": "BEN KENIGSBERG",
+                            "headline": "‘Parkland: Inside Building 12’ Review: Recounting the Attack in Painful Detail",
+                            "summary_short": "This documentary on the Florida school shooting makes the massacre immediate in a way that sometimes gets lost in news coverage or political debates.",
+                            "publication_date": "2019-02-14",
+                            "opening_date": null,
+                            "date_updated": "2019-02-18 03:44:24",
+                            "link": {
+                                "type": "article",
+                                "url": "http://www.nytimes.com/2019/02/14/movies/parkland-inside-building-12-review.html",
+                                "suggested_link_text": "Read the New York Times Review of Parkland: Inside Building 12"
+                            },
+                            "multimedia": {
+                                "type": "mediumThreeByTwo210",
+                                "src": "https://static01.nyt.com/images/2019/02/15/arts/15parkland-inside2/15parkland-inside2-mediumThreeByTwo210.jpg",
+                                "width": 210,
+                                "height": 140
+                            }
+                        }
+                    ],
+                    "movie_index_selected": [],
+                    "current_movie_index": 5,
+                    "current_book_index": 0,
+                    "previous_intent": "MovieReviewIntent"
+                },
+                "user": {
+                    "userId": "amzn1.ask.account.AELOJE2D7XQOBUAMQ7MSVAANTU6LLHNXOUYQIB7T22YTEVCKP6OV24YQTEL372G3LMV3CZQ5BVJ22EGCPWZTWEVTRXWOE67MPZR6HCDKHGSW5MN3LLL24LU6T6P2Y74FWHOWDJ4HXPHR37OJDDOAZQRGIU7PNQJOX7XW6HK37YCGWWNZHF5XTWN2O22Y2UAOMQK3EMLYGEFP7CI"
+                }
+            },
+            "context": {
+                "Alexa.Presentation.APL": {
+                    "token": "listToken",
+                    "version": "ARCRenderer-1.0",
+                    "componentsVisibleOnScreen": [
+                        {
+                            "id": "viewport",
+                            "position": "1024x600+0+0:0",
+                            "type": "mixed",
+                            "tags": {
+                                "viewport": {}
+                            },
+                            "visibility": 1,
+                            "children": [
+                                {
+                                    "id": ":142",
+                                    "position": "1024x600+0+0:1",
+                                    "type": "mixed",
+                                    "tags": {
+                                        "focused": false,
+                                        "spoken": false,
+                                        "disabled": false
+                                    },
+                                    "visibility": 1,
+                                    "children": [
+                                        {
+                                            "id": ":143",
+                                            "position": "1024x600+0+0:2",
+                                            "type": "graphic",
+                                            "tags": {
+                                                "focused": false,
+                                                "spoken": false,
+                                                "disabled": false
+                                            },
+                                            "visibility": 1,
+                                            "entities": []
+                                        },
+                                        {
+                                            "id": ":145",
+                                            "position": "1024x94+0+0:2",
+                                            "type": "mixed",
+                                            "tags": {
+                                                "focused": false,
+                                                "spoken": false,
+                                                "disabled": false
+                                            },
+                                            "visibility": 1,
+                                            "children": [
+                                                {
+                                                    "id": ":146",
+                                                    "position": "1024x94+0+0:3",
+                                                    "type": "mixed",
+                                                    "tags": {
+                                                        "focused": false,
+                                                        "spoken": false,
+                                                        "disabled": false
+                                                    },
+                                                    "visibility": 1,
+                                                    "children": [
+                                                        {
+                                                            "id": ":147",
+                                                            "position": "1024x94+0+0:4",
+                                                            "type": "mixed",
+                                                            "tags": {
+                                                                "focused": false,
+                                                                "spoken": false,
+                                                                "disabled": false
+                                                            },
+                                                            "visibility": 1,
+                                                            "children": [
+                                                                {
+                                                                    "id": ":149",
+                                                                    "position": "661x33+60+32:5",
+                                                                    "type": "mixed",
+                                                                    "tags": {
+                                                                        "focused": false,
+                                                                        "spoken": false,
+                                                                        "disabled": false
+                                                                    },
+                                                                    "visibility": 1,
+                                                                    "children": [
+                                                                        {
+                                                                            "id": ":150",
+                                                                            "position": "629x33+60+32:6",
+                                                                            "type": "text",
+                                                                            "tags": {
+                                                                                "focused": false,
+                                                                                "spoken": false,
+                                                                                "disabled": false
+                                                                            },
+                                                                            "visibility": 1,
+                                                                            "entities": []
+                                                                        }
+                                                                    ],
+                                                                    "entities": []
+                                                                },
+                                                                {
+                                                                    "id": ":152",
+                                                                    "position": "242x46+721+32:5",
+                                                                    "type": "mixed",
+                                                                    "tags": {
+                                                                        "focused": false,
+                                                                        "spoken": false,
+                                                                        "disabled": false
+                                                                    },
+                                                                    "visibility": 1,
+                                                                    "children": [
+                                                                        {
+                                                                            "id": ":153",
+                                                                            "position": "242x46+721+32:6",
+                                                                            "type": "graphic",
+                                                                            "tags": {
+                                                                                "focused": false,
+                                                                                "spoken": false,
+                                                                                "disabled": false
+                                                                            },
+                                                                            "visibility": 1,
+                                                                            "entities": []
+                                                                        }
+                                                                    ],
+                                                                    "entities": []
+                                                                }
+                                                            ],
+                                                            "entities": []
+                                                        }
+                                                    ],
+                                                    "entities": []
+                                                }
+                                            ],
+                                            "entities": []
+                                        },
+                                        {
+                                            "id": ":154",
+                                            "position": "1024x420+0+94:2",
+                                            "type": "mixed",
+                                            "tags": {
+                                                "focused": false,
+                                                "spoken": false,
+                                                "disabled": false,
+                                                "list": {
+                                                    "itemCount": 2,
+                                                    "lowestIndexSeen": 0,
+                                                    "highestIndexSeen": 1,
+                                                    "lowestOrdinalSeen": 0,
+                                                    "highestOrdinalSeen": 0
+                                                },
+                                                "scrollable": {
+                                                    "direction": "horizontal",
+                                                    "allowForward": false,
+                                                    "allowBackwards": false
+                                                }
+                                            },
+                                            "visibility": 1,
+                                            "children": [
+                                                {
+                                                    "id": ":157",
+                                                    "position": "332x369+60+94:3",
+                                                    "type": "mixed",
+                                                    "tags": {
+                                                        "focused": false,
+                                                        "listItem": {
+                                                            "index": 0
+                                                        },
+                                                        "spoken": false,
+                                                        "disabled": false,
+                                                        "clickable": true
+                                                    },
+                                                    "visibility": 1,
+                                                    "children": [
+                                                        {
+                                                            "id": ":158",
+                                                            "position": "332x369+60+94:4",
+                                                            "type": "mixed",
+                                                            "tags": {
+                                                                "focused": false,
+                                                                "spoken": false,
+                                                                "disabled": false
+                                                            },
+                                                            "visibility": 1,
+                                                            "children": [
+                                                                {
+                                                                    "id": ":159",
+                                                                    "position": "300x300+76+94:5",
+                                                                    "type": "graphic",
+                                                                    "tags": {
+                                                                        "focused": false,
+                                                                        "spoken": false,
+                                                                        "disabled": false
+                                                                    },
+                                                                    "visibility": 1,
+                                                                    "entities": []
+                                                                },
+                                                                {
+                                                                    "id": ":160",
+                                                                    "position": "300x28+76+406:5",
+                                                                    "type": "text",
+                                                                    "tags": {
+                                                                        "focused": false,
+                                                                        "spoken": false,
+                                                                        "disabled": false
+                                                                    },
+                                                                    "visibility": 1,
+                                                                    "entities": []
+                                                                },
+                                                                {
+                                                                    "id": ":161",
+                                                                    "position": "300x25+76+438:5",
+                                                                    "type": "text",
+                                                                    "tags": {
+                                                                        "focused": false,
+                                                                        "spoken": false,
+                                                                        "disabled": false
+                                                                    },
+                                                                    "visibility": 1,
+                                                                    "entities": []
+                                                                }
+                                                            ],
+                                                            "entities": []
+                                                        }
+                                                    ],
+                                                    "entities": []
+                                                },
+                                                {
+                                                    "id": ":163",
+                                                    "position": "332x369+392+94:3",
+                                                    "type": "mixed",
+                                                    "tags": {
+                                                        "focused": false,
+                                                        "listItem": {
+                                                            "index": 1
+                                                        },
+                                                        "spoken": false,
+                                                        "disabled": false,
+                                                        "clickable": true
+                                                    },
+                                                    "visibility": 1,
+                                                    "children": [
+                                                        {
+                                                            "id": ":164",
+                                                            "position": "332x369+392+94:4",
+                                                            "type": "mixed",
+                                                            "tags": {
+                                                                "focused": false,
+                                                                "spoken": false,
+                                                                "disabled": false
+                                                            },
+                                                            "visibility": 1,
+                                                            "children": [
+                                                                {
+                                                                    "id": ":165",
+                                                                    "position": "300x300+408+94:5",
+                                                                    "type": "graphic",
+                                                                    "tags": {
+                                                                        "focused": false,
+                                                                        "spoken": false,
+                                                                        "disabled": false
+                                                                    },
+                                                                    "visibility": 1,
+                                                                    "entities": []
+                                                                },
+                                                                {
+                                                                    "id": ":166",
+                                                                    "position": "300x28+408+406:5",
+                                                                    "type": "text",
+                                                                    "tags": {
+                                                                        "focused": false,
+                                                                        "spoken": false,
+                                                                        "disabled": false
+                                                                    },
+                                                                    "visibility": 1,
+                                                                    "entities": []
+                                                                },
+                                                                {
+                                                                    "id": ":167",
+                                                                    "position": "300x25+408+438:5",
+                                                                    "type": "text",
+                                                                    "tags": {
+                                                                        "focused": false,
+                                                                        "spoken": false,
+                                                                        "disabled": false
+                                                                    },
+                                                                    "visibility": 1,
+                                                                    "entities": []
+                                                                }
+                                                            ],
+                                                            "entities": []
+                                                        }
+                                                    ],
+                                                    "entities": []
+                                                }
+                                            ],
+                                            "entities": []
+                                        },
+                                        {
+                                            "id": ":169",
+                                            "position": "1024x92+0+514:2",
+                                            "type": "mixed",
+                                            "tags": {
+                                                "focused": false,
+                                                "spoken": false,
+                                                "disabled": false
+                                            },
+                                            "visibility": 0.93,
+                                            "children": [
+                                                {
+                                                    "id": ":170",
+                                                    "position": "904x38+60+532:3",
+                                                    "type": "text",
+                                                    "tags": {
+                                                        "focused": false,
+                                                        "spoken": false,
+                                                        "disabled": false
+                                                    },
+                                                    "visibility": 1,
+                                                    "entities": []
+                                                }
+                                            ],
+                                            "entities": []
+                                        }
+                                    ],
+                                    "entities": []
+                                }
+                            ],
+                            "entities": []
+                        }
+                    ]
+                },
+                "System": {
+                    "application": {
+                        "applicationId": "amzn1.ask.skill.dbbcf63d-4053-4792-b2b8-2990bbb1ff1d"
+                    },
+                    "user": {
+                        "userId": "amzn1.ask.account.AELOJE2D7XQOBUAMQ7MSVAANTU6LLHNXOUYQIB7T22YTEVCKP6OV24YQTEL372G3LMV3CZQ5BVJ22EGCPWZTWEVTRXWOE67MPZR6HCDKHGSW5MN3LLL24LU6T6P2Y74FWHOWDJ4HXPHR37OJDDOAZQRGIU7PNQJOX7XW6HK37YCGWWNZHF5XTWN2O22Y2UAOMQK3EMLYGEFP7CI"
+                    },
+                    "device": {
+                        "deviceId": "amzn1.ask.device.AFNO3GZIRSAS2DYUTMJTPRQQXLC6UFLFDR52NTUAQPB2JL236MFRVPORL3U6IYRNAN3XOSBJPIR4TJB5D5CBZCNBHUSHXQDF5BXWASTK77PWI5DBNJ47ALNYC26W4SZCK4R332KIUMMGSKHANNKNIKXU4OHI6XSDISZZE5ITER66PM6J7YP4U",
+                        "supportedInterfaces": {
+                            "Alexa.Presentation.APL": {
+                                "runtime": {
+                                    "maxVersion": "1.0"
+                                }
+                            }
+                        }
+                    },
+                    "apiEndpoint": "https://api.eu.amazonalexa.com",
+                    "apiAccessToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjEifQ.eyJhdWQiOiJodHRwczovL2FwaS5hbWF6b25hbGV4YS5jb20iLCJpc3MiOiJBbGV4YVNraWxsS2l0Iiwic3ViIjoiYW16bjEuYXNrLnNraWxsLmRiYmNmNjNkLTQwNTMtNDc5Mi1iMmI4LTI5OTBiYmIxZmYxZCIsImV4cCI6MTU1MDQ3MzM5MywiaWF0IjoxNTUwNDczMDkzLCJuYmYiOjE1NTA0NzMwOTMsInByaXZhdGVDbGFpbXMiOnsiY29uc2VudFRva2VuIjpudWxsLCJkZXZpY2VJZCI6ImFtem4xLmFzay5kZXZpY2UuQUZOTzNHWklSU0FTMkRZVVRNSlRQUlFRWExDNlVGTEZEUjUyTlRVQVFQQjJKTDIzNk1GUlZQT1JMM1U2SVlSTkFOM1hPU0JKUElSNFRKQjVENUNCWkNOQkhVU0hYUURGNUJYV0FTVEs3N1BXSTVEQk5KNDdBTE5ZQzI2VzRTWkNLNFIzMzJLSVVNTUdTS0hBTk5LTklLWFU0T0hJNlhTRElTWlpFNUlURVI2NlBNNko3WVA0VSIsInVzZXJJZCI6ImFtem4xLmFzay5hY2NvdW50LkFFTE9KRTJEN1hRT0JVQU1RN01TVkFBTlRVNkxMSE5YT1VZUUlCN1QyMllURVZDS1A2T1YyNFlRVEVMMzcyRzNMTVYzQ1pRNUJWSjIyRUdDUFdaVFdFVlRSWFdPRTY3TVBaUjZIQ0RLSEdTVzVNTjNMTEwyNExVNlQ2UDJZNzRGV0hPV0RKNEhYUEhSMzdPSkRET0FaUVJHSVU3UE5RSk9YN1hXNkhLMzdZQ0dXV05aSEY1WFRXTjJPMjJZMlVBT01RSzNFTUxZR0VGUDdDSSJ9fQ.QYcjGWcuWEXljRkh0q8W2wvEAJQ3g8uHJrMcsy1UUtj2yBC96IO7sfdvxN_zlbxDgBsSg34nPXriSdwX_Nm2-p8heUT6XX4KX7omxGvnvG0X1_t7J3IPsxYiw--jAUJwahzr2WQfvtbEuB2QuZ9BMmA2NSCjGZSCYINaxgjur2lhqkGaZiZkzSPmlP7Zv1ZQVpqEj9XyIaLJ_Dz7JNQjf1-8CU5BCBXQ3gh6ogWIaepwfrcDL8LYsk4UMX5I2TNtFhMDobdY5qKIrV_-6xxFDKL5A_utn1oBnxFeYHkr7mkenkIl1xw6QSQLQhcKosRGnS3MiSwwMLk96GXdikzKaA"
+                },
+                "Viewport": {
+                    "experiences": [
+                        {
+                            "arcMinuteWidth": 246,
+                            "arcMinuteHeight": 144,
+                            "canRotate": false,
+                            "canResize": false
+                        }
+                    ],
+                    "shape": "RECTANGLE",
+                    "pixelWidth": 1024,
+                    "pixelHeight": 600,
+                    "dpi": 160,
+                    "currentPixelWidth": 1024,
+                    "currentPixelHeight": 600,
+                    "touch": [
+                        "SINGLE"
+                    ]
+                }
+            },
+            "request": {
+                "type": "IntentRequest",
+                "requestId": "amzn1.echo-api.request.79946dd9-c6c7-47f2-b88f-30a17548b297",
+                "timestamp": "2019-02-18T06:58:13Z",
+                "locale": "en-IN",
+                "intent": {
+                    "name": "AMAZON.FallbackIntent",
+                    "confirmationStatus": "NONE"
+                },
+                "dialogState": "STARTED"
+            }
+        }
+    },
+    "": {
+        "lambda": {}
+    }
+}
