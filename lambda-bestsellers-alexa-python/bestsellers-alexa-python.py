@@ -1,8 +1,8 @@
 from ask_sdk_core.skill_builder import SkillBuilder
 import json
-sb = SkillBuilder()
+
 from ask_sdk_core.utils import is_request_type
-from ask_sdk_model.ui import SimpleCard
+from ask_sdk.standard import StandardSkillBuilder
 from ask_sdk_core.handler_input import HandlerInput
 import copy
 from ask_sdk_model.dialog.elicit_slot_directive import ElicitSlotDirective
@@ -24,6 +24,10 @@ list_item_template = str()
 book_item_template = str()
 cat_images = str()
 TAG = 'bestsellers-alexa-python'
+
+sb = StandardSkillBuilder(table_name='Best_Media_Info',auto_create_table=False)
+
+
 with open('category_item_template.json') as f:
     list_item_template = json.load(f)
 
@@ -33,6 +37,7 @@ with open('category_image_map.json') as f:
 with open('book_item_template.json') as f:
     book_item_template = json.load(f)
 
+
 def load_apl_document(file_path):
     # type: (str) -> Dict[str, Any]
     """Load the apl json document at the path into a dict object."""
@@ -40,16 +45,30 @@ def load_apl_document(file_path):
         return json.load(f)
 
 
-def get_categories():
-    categories = list()
-    query_response = requests.get(query_lists, params={'api-key': nyt_api_key}, timeout=60).json()
-    if query_response['status'] == 'OK':
-        for item in query_response['results']:
-            categories.append(item['list_name'])
-        return categories
+def is_apl_supported(handler_input):
+
+    if  handler_input.request_envelope.context.system.device.supported_interfaces.alexa_presentation_apl is None:
+        return False
     else:
-        print('Some error in getting categories from API status = ' +  query_response['status'])
+        return True
+
+
+def get_categories():
+    print(' message from function = {0}'.format('get_categories'))
+    categories = list()
+    try:
+        query_response = requests.get(query_lists, params={'api-key': nyt_api_key}, timeout=60).json()
+        if query_response['status'] == 'OK':
+            for item in query_response['results']:
+                categories.append(item['list_name'])
+            return categories
+        else:
+            print('Some error in getting categories from API status = ' +  query_response['status'])
+            return None
+    except Exception as exc:
+        print("Error sourc = get_categories, Error = {0}".format(exc.args[0]))
         return None
+
 
 def prepare_category_list(data_source):
     with open('category_names.json') as f:
@@ -83,14 +102,6 @@ def prepare_category_list(data_source):
 
             item['textContent']['secondaryText']['text'] = "  ".join(split_major_name)
 
-
-            #if cat_images.get(major_category_names[i]) is not None:
-                #print(cat_images[major_category_names[i]])
-               # item['image']['sources'][0]["url"] = cat_images[major_category_names[i]] # TBD
-               # item['image']['sources'][1]["url"] = cat_images[major_category_names[i]]# TBD
-            #else:
-                #item['image']['sources'][0]["url"] =  default_image
-                #item['image']['sources'][1]["url"] = default_image
             item['token'] = major_category_names[i]
             listTemplate1ListData['listPage']['listItems'].append(copy.deepcopy(item))
             #if i == 19:
@@ -99,6 +110,7 @@ def prepare_category_list(data_source):
 
     data_source['listTemplate1ListData'] = listTemplate1ListData
     return data_source
+
 
 def prepare_book_list(data_source, book_list, category):
     listTemplate1ListData = data_source['listTemplate1ListData']
@@ -113,14 +125,15 @@ def prepare_book_list(data_source, book_list, category):
             item['ordinalNumber'] = book_list[i]['rank']
             item['textContent']['primaryText']['text'] = book_list[i]['title']
             #item['textContent']['secondaryText']['text'] = book_list[i]['description']
-            item['textContent']['secondaryText']['text'] = ""
-            item['textContent']['tertiaryText']['text'] =  ""
+           
+         
 
             item['token'] = book_list[i]['title']
             listTemplate1ListData['listPage']['listItems'].append(copy.deepcopy(item))
 
     data_source['listTemplate1ListData'] = listTemplate1ListData
     return data_source
+
 
 def get_bestsellers_list(category):
     bestsellers = list()
@@ -141,7 +154,8 @@ def get_bestsellers_list(category):
 
 
 def fill_single_book_template(bestsellers, rank, speech_text, handler_input, category):
-    print("Executing method fill_single_book_template")
+    print(' message from function = {0}'.format('fill_single_book_template'))
+    ask_text = ' To know more about books, you can say find books or say stop.'
     for i in range(len(bestsellers)):
         print('rank = {0}'.format(bestsellers[i]['rank']))
         print(str(bestsellers[i]['rank']) == str(rank))
@@ -149,7 +163,7 @@ def fill_single_book_template(bestsellers, rank, speech_text, handler_input, cat
             speech_text = speech_text + " On rank {0},  book is  {1}. {2}".format(bestsellers[i]['rank'],
                                                                                   bestsellers[i]['title'],
                                                                                   bestsellers[i]['description'])
-            books_datasource = load_apl_document("apl_single_book.json")['dataSources']
+            books_datasource = load_apl_document("apl_single_book.json")['datasources']
             books_datasource['bodyTemplate2Data']['title'] = "Category: " + category
             books_datasource['bodyTemplate2Data']['textContent']['title']['text'] = bestsellers[i]['title']
             books_datasource['bodyTemplate2Data']['textContent']['subtitle']['text'] = 'Rank: ' + str(
@@ -157,65 +171,99 @@ def fill_single_book_template(bestsellers, rank, speech_text, handler_input, cat
             books_datasource['bodyTemplate2Data']['textContent']['isbn']['text'] = "ISBN10:" + str(
                 bestsellers[i]['primary_isbn10'])
             books_datasource['bodyTemplate2Data']['textContent']['primaryText']['text'] = bestsellers[i]['description']
-            print(TAG + speech_text)
-            handler_input.response_builder.speak(speech_text).set_should_end_session(
-                False).add_directive(
-                RenderDocumentDirective(
-                    token="listToken",
-                    document=load_apl_document("apl_single_book.json")['document'],
-                    datasources=books_datasource
+            
+            if is_apl_supported(handler_input):
+                handler_input.response_builder.speak(speech_text + ask_text).ask(ask_text).set_should_end_session(False).add_directive(
+                    RenderDocumentDirective(
+                        token="listToken",
+                        document=load_apl_document("apl_single_book.json")['document'],
+                        datasources=books_datasource
+                    )
                 )
-            )
+            else:
+                handler_input.response_builder.speak(speech_text).set_should_end_session(False)
+
             break
 
 
 def handle_get_book_list(handler_input, category, rank=None):
+    print(' message from function = {0}'.format('handle_get_book_list'))
     bestsellers = get_bestsellers_list(category)
     handler_input.attributes_manager.session_attributes['category'] = category
     handler_input.attributes_manager.session_attributes['book_list'] = bestsellers
-    print(bestsellers)
+    ask_text = ' To know more about books, you can say find books or say stop.'
+   
     speech_text = "Sorry could not find bestsellers list. Please try again"
     if bestsellers is not None and len(bestsellers)>0:
         if rank is None:
-            speech_text = "For category {0}".format(category)
+            speech_text = "For category {0} bestselling books are. ".format(category)
             for i in range(len(bestsellers)):
-                speech_text = speech_text + " On rank {0},  book is  {1}. {2}".format(bestsellers[i]['rank'],
+                speech_text = speech_text + " On rank {0},  book name is  {1}. {2}".format(bestsellers[i]['rank'],
                                                                                           bestsellers[i]['title'],
                                                                                           bestsellers[i]['description'])
 
-            books_datasource = prepare_book_list(load_apl_document("books_list_apl.json")['dataSources'],
+            books_datasource = prepare_book_list(load_apl_document("books_list_apl.json")['datasources'],
                                                      bestsellers, category)
-            print(TAG + "Book List is ")
-            handler_input.response_builder.speak(speech_text).set_should_end_session(
-                False).add_directive(
-                RenderDocumentDirective(
-                    token="listToken",
-                    document=load_apl_document("books_list_apl.json")['document'],
-                    datasources=books_datasource
+            speech_text = speech_text + ask_text
+            
+            handler_input.response_builder.speak(speech_text).ask(ask_text).set_should_end_session(False)
+            if is_apl_supported(handler_input):
+                handler_input.response_builder.add_directive(
+                    RenderDocumentDirective(
+                        token="listToken",
+                        document=load_apl_document("books_list_apl.json")['document'],
+                        datasources=books_datasource
+                        )
                     )
-                )
         else:
-            speech_text = "For category {0}".format(category)
+            speech_text = "For category {0} ".format(category)
             fill_single_book_template(bestsellers, rank, speech_text, handler_input, category)
 
     else:
-        handler_input.response_builder.speak(speech_text).set_should_end_session(True)
+        handler_input.response_builder.speak(speech_text).set_should_end_session(False)
 
-def navigate_home_handler(handler_input):
-    speech_text = "To get the New York Times Best sellers list you can say find books list for sports!"
-    print('request = {0}'.format(handler_input.request_envelope.request))
-    handler_input.response_builder.speak(speech_text).set_should_end_session(
-         False).add_directive(
-        RenderDocumentDirective(
-                token="listToken",
-                document=load_apl_document("apl_launch_bestseller.json")['document'],
-                datasources=load_apl_document("apl_launch_bestseller.json")['dataSources']
+
+def navigate_home_handler(handler_input, speech_text, ask_text=""):
+    
+    handler_input.attributes_manager.session_attributes['current_movie_index'] = 0
+    handler_input.attributes_manager.session_attributes['current_book_index'] = 0
+    handler_input.attributes_manager.session_attributes['previous_intent'] = ""
+    handler_input.response_builder.speak(speech_text).set_should_end_session(False).ask(ask_text)
+    if is_apl_supported(handler_input):
+        handler_input.response_builder.add_directive(
+            RenderDocumentDirective(
+                    token="listToken",
+                    document=load_apl_document("apl_launch_bestseller.json")['document'],
+                    datasources=load_apl_document("apl_launch_bestseller.json")['datasources']
+                )
+        )
+    return handler_input.response_builder.response
+
+def handle_get_categories(handler_input):
+    print('message from function = {0}'.format('handle_get_categories'))
+    ask_text = " To know more about books, you can say find books or to quit say stop."
+    cat_list = get_categories()
+    print('cat_list = {0}'.format(cat_list))
+    if cat_list is not None:
+        speech_text = "Here are the book categories, {0}".format(", ".join(cat_list))
+        new_datasource = prepare_category_list(load_apl_document("apl_books_categories.json")['datasources'])
+        handler_input.response_builder.speak(speech_text + ask_text).ask(ask_text).set_should_end_session(False)
+        if is_apl_supported(handler_input):
+            handler_input.response_builder.add_directive(
+                RenderDocumentDirective(
+                    token="listToken",
+                    document=load_apl_document("apl_books_categories.json")['document'],
+                    datasources=new_datasource
+                )
             )
-    )
+    else:
+        speech_text = "Sorry could not get the categories. Please try again or to quit say Stop"
+        handler_input.response_builder.speak(speech_text).ask(ask_text).set_should_end_session(False)
+    return handler_input.response_builder.response
 
 @sb.request_handler(can_handle_func=is_intent_name("GetBestSellerIntent"))
 def get_bestsellers_intent_handler(handler_input):
-
+    print(' message from function = {0}'.format('get_bestsellers_intent_handler'))
     slots = handler_input.request_envelope.request.intent.slots
     dialogstate = handler_input.request_envelope.request.dialog_state
     intent_request = handler_input.request_envelope.request.intent
@@ -254,18 +302,11 @@ def get_bestsellers_intent_handler(handler_input):
             handle_get_book_list(handler_input, category_value, rank=rank_value)
     return handler_input.response_builder.response
 
+
 @sb.request_handler(can_handle_func=is_request_type("LaunchRequest"))
 def launch_request_handler(handler_input):
-    speech_text = "Welcome to Best Media Info, to get the New York Times Best sellers list you can say find books list for sports!"
-    print('request = {0}'.format(handler_input.request_envelope.request))
-    handler_input.response_builder.speak(speech_text).set_should_end_session(
-         False).add_directive(
-        RenderDocumentDirective(
-                token="listToken",
-                document=load_apl_document("apl_launch_bestseller.json")['document'],
-                datasources=load_apl_document("apl_launch_bestseller.json")['dataSources']
-            )
-    )
+    speech_text = "Welcome to Best Media Info, to get the New York Times Best sellers list, you can say find books list"
+    navigate_home_handler(handler_input, speech_text, 'you can say find books list for sports')
     return handler_input.response_builder.response
 
 
@@ -273,8 +314,9 @@ def launch_request_handler(handler_input):
     can_handle_func=lambda input :
         is_intent_name("AMAZON.NavigateHomeIntent")(input) or
         is_intent_name("HomeIntent")(input))
-def launch_request_handler(handler_input):
-    navigate_home_handler(handler_input)
+def go_home_request_handler(handler_input):
+    speech_text = "To get the New York Times Best sellers list you can say find books list for sports."
+    navigate_home_handler(handler_input, speech_text, 'you can say find books list for sports')
     return handler_input.response_builder.response
 
 
@@ -282,59 +324,40 @@ def launch_request_handler(handler_input):
 def alexa_user_event_request_handler(handler_input: HandlerInput):
     # Handler for Skill Launch
 
-    print('AWS: alexa_user_event_request_handler')
-    print('request = {0}'.format(handler_input.request_envelope.request))
-    print('object_type = {0}'.format(handler_input.request_envelope.request.object_type))
+    print('message from function = {0}'.format('alexa_user_event_request_handler'))
+    
     arguments = handler_input.request_envelope.request.arguments
     request_type = handler_input.request_envelope.request.object_type
+    print('arguments = {0}'.format(arguments))
 
     if len(arguments) >= 3:
         item_selected = arguments[0]
         item_ordinal =  arguments[1]
-        item_title = arguments[2]
+        item_title   = arguments[2]
 
     if item_selected == "LogoItem":
-        navigate_home_handler(handler_input)
+        speech_text = "To get the New York Times Best sellers list, you can say find books list for sports."
+        navigate_home_handler(handler_input, speech_text, speech_text)
         return handler_input.response_builder.response
+        
 
-    if item_selected == 'LaunchTemplateItem':
+    elif item_selected == 'LaunchTemplateItem':
         if item_title == 'Books':
             # Launch Book Category
-            speech_text = "Following are the bestseller books categories. Please select one category"
-            new_datasource = prepare_category_list(load_apl_document("apl_books_categories.json")['dataSources'])
-            handler_input.response_builder.speak(speech_text).set_should_end_session(
-                False).add_directive(
-                RenderDocumentDirective(
-                    token="listToken",
-                    document=load_apl_document("apl_books_categories.json")['document'],
-                    datasources=new_datasource
-                )
-            )
+            handle_get_categories(handler_input)
+            return handler_input.response_builder.response
 
         if item_title == 'Movies':
             # Launch Book Category
             speech_text = "Following are brief movie reviews"
+            handler_input.attributes_manager.session_attributes['previous_intent'] = 'MovieReviewIntent'
             res_reviews = requests.get(query_moview_reviews, params={'api-key': nyt_api_key}, timeout=60).json()
             if str.lower(res_reviews['status']) == 'ok':
-                fill_movie_list(handler_input, res_reviews)
+                fill_movie_list(handler_input, res_reviews, 0)
             else:
                 speech_text = "Sorry could find movie reviews at this time. Please try again"
                 handler_input.response_builder.speak(speech_text).ask(speech_text)
-
-
-        if item_title == 'Top Stories':
-            # Launch Book Category
-            speech_text = "Following are the Top Stories today"
-            new_datasource = prepare_category_list(load_apl_document("apl_books_categories.json")['dataSources'])
-            handler_input.response_builder.speak(speech_text).set_should_end_session(
-                False).add_directive(
-                RenderDocumentDirective(
-                    token="listToken",
-                    document=load_apl_document("apl_books_categories.json")['document'],
-                    datasources=new_datasource
-                )
-            )
-
+    
     elif item_selected == "BookCategories":
         handle_get_book_list(handler_input, item_title, rank=None)
 
@@ -347,11 +370,11 @@ def alexa_user_event_request_handler(handler_input: HandlerInput):
         fill_single_book_template(book_list, item_ordinal, "", handler_input, category)
 
     elif item_selected == 'MovieItem':
-        if 'movie_review_data' in handler_input.attributes_manager.session_attributes:
-            movie_review_data = handler_input.attributes_manager.session_attributes['movie_review_data']
-            movie_item  = movie_review_data[item_ordinal -1]
+        if 'movie_list' in handler_input.attributes_manager.persistent_attributes:
+            movie_review_data = json.loads(handler_input.attributes_manager.persistent_attributes['movie_list'])
+            movie_item  = movie_review_data['results'][item_ordinal]
             print('loading movie data {0}'.format(movie_item))
-            movie_datasource = load_apl_document("apl_single_movie.json")['dataSources']
+            movie_datasource = load_apl_document("apl_single_movie.json")['datasources']
             movie_datasource['bodyTemplate2Data']['title'] = 'NYT Movie Review'
             movie_datasource['bodyTemplate2Data']['textContent']['title']['text'] = movie_item['display_title']
             movie_datasource['bodyTemplate2Data']['textContent']['subtitle']['text'] = 'Critics Pick: ' + str(
@@ -376,120 +399,162 @@ def alexa_user_event_request_handler(handler_input: HandlerInput):
                 )
             )
 
-
-
     return handler_input.response_builder.response
-
 
 
 @sb.request_handler(can_handle_func=is_intent_name("GetBookCategoriesIntent"))
 def get_categories_handler(handler_input):
-
-    cat_list = get_categories()
-    if cat_list is not None:
-        speech_text = "Here are the book categories, {0}".format(", ".join(cat_list))
-        new_datasource = prepare_category_list(load_apl_document("apl_books_categories.json")['dataSources'])
-        handler_input.response_builder.speak(speech_text).set_should_end_session(
-            False).add_directive(
-            RenderDocumentDirective(
-                token="listToken",
-                document=load_apl_document("apl_books_categories.json")['document'],
-                datasources=new_datasource
-            )
-        )
-    else:
-        speech_text = "Sorry could not get the data you are looking for. Please try again"
-        handler_input.response_builder.speak(speech_text).ask(speech_text)
+    handle_get_categories(handler_input)
     return handler_input.response_builder.response
 
 
 @sb.request_handler(can_handle_func=is_intent_name("AMAZON.HelpIntent"))
 def help_intent_handler(handler_input):
-    speech_text = "To find New york times bestseller Books list you can say find books for sports" +\
-                  " and if you want to know the categories you can say get book categories"
-
-    handler_input.response_builder.speak(speech_text).ask(speech_text).add_directive(
+    speech_text = "Best Media Info provides information about New York Times best seller books list and moview reviews, " +\
+    "books are devided in categories for example sports, travel, and science. " +\
+    "To know about books you can say find book for sports, To know about book categories say Get categories." +\
+    " or To get movie reviews please say get move review"
+    ask_text = 'Sorry I did not get it. To get book say find books for tavel '
+    handler_input.response_builder.speak(speech_text).ask(speech_text)
+    if is_apl_supported(handler_input):
+        handler_input.response_builder.add_directive(
             RenderDocumentDirective(
                 token="pagerToken",
-                document=load_apl_document("apl_launch_bestseller.json")['document'],
-                datasources=load_apl_document("apl_launch_bestseller.json")['dataSources']
+                document=load_apl_document("apl_help_view.json")['document'],
+                datasources=load_apl_document("apl_help_view.json")['datasources']
             )
     )
     return handler_input.response_builder.response
 
 
+
+@sb.request_handler(can_handle_func=is_intent_name("AMAZON.YesIntent"))
+def yes_intent_handler(handler_input):
+    print(' message from function = {0}'.format('yes_intent_handler'))
+    sorry_text = 'Sorry, I did not get it. if you want to know the categories you can say get book categories'
+    attr = handler_input.attributes_manager.persistent_attributes
+    sess_attr = handler_input.attributes_manager.session_attributes
+    if sess_attr['previous_intent'] == 'MovieReviewIntent':
+        try:
+            if attr['movie_list'] is None:
+                attr['movie_list'] = requests.get(query_moview_reviews, params={'api-key': nyt_api_key}, timeout=60).json()
+        except Exception as ex:
+            print('Source = {0}, Error = {1}'.format('launch_request_handler', ex.args[0]))
+
+        fill_movie_list(handler_input, json.loads(attr['movie_list']), sess_attr['current_movie_index'])
+        return handler_input.response_builder.response
+    else:
+        handler_input.response_builder.speak(sorry_text).ask(sorry_text)
+
+    handler_input.attributes_manager.save_persistent_attributes()
+    return handler_input.response_builder.response
+
 #***************************Movie Review *******************************************************
 
 
-def fill_movie_list(handler_input, res_reviews):
+def fill_movie_list(handler_input, res_reviews, start_index=0):
     review_text_list = list()
+    print(" message from function = {0} start_index = {1}".format("fill_movie_list", start_index))
     # will pick any 5 moview review randomly
-    data_source = load_apl_document('apl_movie_list.json')['dataSources']
+    data_source = load_apl_document('apl_movie_list.json')['datasources']
     data_movie_list = data_source['listTemplate1ListData']['listPage']['listItems']
-    item_count = 5 if len(res_reviews['results']) > 5 else len(res_reviews['results'])
-    import random
-    pick = list(range(len(res_reviews['results'])))
+    max_count = start_index + 5 if len(res_reviews['results']) > start_index + 5 else len(res_reviews['results'])
     movie_data_attr = list()
     movie_index_selected = list()
-    for i in range(item_count):
-        movie_index = random.choice(pick)
-        movie_index_selected.append(movie_index)
-        print(movie_index)
-        pick.pop(pick.index(movie_index))
-        movie_item = res_reviews['results'][movie_index]
-        review_text = 'Movie name is {0} critics pick is {1}, movie opening date is {2} and summery is {3}'.format(
-            movie_item['display_title'], movie_item['critics_pick'], movie_item['opening_date'],
-            movie_item['summary_short']
-        )
-        review_text_list.append(review_text)
-
-        # fill APL Template
-        print(review_text)
-        # only five elements
-        if i < 5:
-            data_movie_list[i]['textContent']['primaryText']['text'] = movie_item['display_title']
-            data_movie_list[i]['textContent']['secondaryText']['text'] = movie_item['headline']
+    handler_input.attributes_manager.session_attributes['current_movie_index'] = max_count
+    if start_index < len(res_reviews['results']):
+        for i in range(start_index, max_count):
+            movie_item = res_reviews['results'][i]
+            review_text = 'Movie name is {0}. Number of critics pick is {1}, opening date of movie is {2} and summery is. {3}. '.format(
+                movie_item['display_title'], movie_item['critics_pick'], movie_item['opening_date'],
+                movie_item['summary_short']
+            )
+            review_text_list.append(review_text)
+    
+            # fill APL Template
+            print(review_text)
+            # only five elements
+            data_movie_list[i-start_index]['ordinal'] = i + 1
+            data_movie_list[i-start_index]['listItemIdentifier'] = i
+            data_movie_list[i-start_index]['textContent']['primaryText']['text'] = movie_item['display_title']
+            data_movie_list[i-start_index]['textContent']['secondaryText']['text'] = movie_item['headline']
             # for session attribute
             movie_data_attr.append(movie_item)
+    
+        
+        handler_input.attributes_manager.session_attributes['movie_review_data'] = movie_data_attr
+        handler_input.attributes_manager.session_attributes['movie_index_selected'] = movie_index_selected
+        data_source['listTemplate1ListData']['listPage']['listItems'] = data_movie_list
+        if max_count < len(res_reviews['results']):
+            ask_text = ' To know more movies, please say Yes, to quit say no'
+            speech_text = 'Movie reviews from New York Times. {0}. {1} '.format(
+            ", ".join(review_text_list), ask_text)
+            if is_apl_supported(handler_input):
+                handler_input.response_builder.speak(speech_text).ask(ask_text).set_should_end_session(False).add_directive(
+                    RenderDocumentDirective(
+                        token="listToken",
+                        document=load_apl_document('apl_movie_list.json')['document'],
+                        datasources=data_source
+                    )
+                )
+        else:
+            ask_text ="To start again you can say go home, to quit say stop"
+            speech_text = " {0}. That's all I have for movies. To know about books you can yes get books list for science. To quit you can say stop. ".format(
+                ", ".join(review_text_list))
+            if is_apl_supported(handler_input):
+                handler_input.response_builder.speak(speech_text).ask(ask_text).set_should_end_session(False).add_directive(
+                    RenderDocumentDirective(
+                        token="listToken",
+                        document=load_apl_document('apl_movie_list.json')['document'],
+                        datasources=data_source
+                    )
+                )
+    else:
+        # this case will happen when all reviews are done but user says Yes
+        speech_text = "That's all I have for movies. To know about books you can yes get books list for science. To quit you can say stop."
+        handler_input.response_builder.speak(speech_text).ask(speech_text).set_should_end_session(False)
+    
 
-    handler_input.attributes_manager.session_attributes['movie_review_data'] = movie_data_attr
-    handler_input.attributes_manager.session_attributes['movie_index_selected'] = movie_index_selected
-    data_source['listTemplate1ListData']['listPage']['listItems'] = data_movie_list
-    speech_text = 'Movie reviews from New York Times are as following {0} For more details you can visit the website of new york times'.format(
-        ", ".join(review_text_list))
-
-    handler_input.response_builder.speak(speech_text).ask(speech_text).set_should_end_session(
-        False).add_directive(
-        RenderDocumentDirective(
-            token="listToken",
-            document=load_apl_document('apl_movie_list.json')['document'],
-            datasources=data_source
-        )
-    )
+    return handler_input.response_builder.response
 
 
 @sb.request_handler(can_handle_func=is_intent_name("MovieReviewIntent"))
 def get_movie_review_intent_handler(handler_input):
+    print(' message from function = {0}'.format('get_movie_review_intent_handler'))
     speech_text = ""
+
     res_reviews = requests.get(query_moview_reviews, params={'api-key': nyt_api_key}, timeout=60).json()
+    handler_input.attributes_manager.session_attributes['previous_intent'] = 'MovieReviewIntent'
 
     if str.lower(res_reviews['status']) == 'ok':
-        fill_movie_list(handler_input, res_reviews)
+        fill_movie_list(handler_input, res_reviews, 0)
     else:
         speech_text = "Sorry could find movie reviews at this time. Please try again"
         handler_input.response_builder.speak(speech_text).ask(speech_text)
+    handler_input.attributes_manager.persistent_attributes['movie_list'] = json.dumps(res_reviews)
+    handler_input.attributes_manager.save_persistent_attributes()
     return handler_input.response_builder.response
 
 
-@sb.request_handler(
-    can_handle_func=lambda input :
-        is_intent_name("AMAZON.CancelIntent")(input) or
-        is_intent_name("AMAZON.StopIntent")(input))
+@sb.request_handler(can_handle_func=lambda input :
+    is_intent_name("AMAZON.StopIntent")(input) or
+    is_intent_name("AMAZON.NoIntent")(input) or
+    is_intent_name("AMAZON.NoIntent")(input))
 def cancel_and_stop_intent_handler(handler_input):
+    print(' message from function = {0}'.format('cancel_and_stop_intent_handler'))
     speech_text = "Goodbye!"
-
-    handler_input.response_builder.speak(speech_text)
+    if is_apl_supported(handler_input):
+        handler_input.response_builder.add_directive(
+            RenderDocumentDirective(
+                token="pagerToken",
+                document=load_apl_document("apl_goodbye_view.json")["document"],
+                datasources=load_apl_document("apl_goodbye_view.json")["datasources"]
+                )
+        )
+    
+    handler_input.response_builder.speak(speech_text).set_should_end_session(True)
     return handler_input.response_builder.response
+
 
 @sb.request_handler(can_handle_func=is_request_type("SessionEndedRequest"))
 def session_ended_request_handler(handler_input):
@@ -497,14 +562,16 @@ def session_ended_request_handler(handler_input):
 
     return handler_input.response_builder.response
 
+
 @sb.exception_handler(can_handle_func=lambda i, e: True)
 def all_exception_handler(handler_input, exception):
     # Log the exception in CloudWatch Logs
     print(exception)
 
-    speech = "Sorry, I didn't get it. Can you please say it again!!"
+    speech = "Sorry, There is some problem in getting your request. Can you please say it again!!"
     handler_input.response_builder.speak(speech).ask(speech)
     return handler_input.response_builder.response
+
 
 handler = sb.lambda_handler()
 

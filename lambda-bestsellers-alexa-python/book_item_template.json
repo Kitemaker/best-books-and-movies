@@ -5,34 +5,7 @@
     "primaryText": {
       "type": "PlainText",
       "text": ""
-    },
-    "secondaryText": {
-        "type": "PlainText",
-        "text": ""
-      },
-	"tertiaryText": {
-        "type": "PlainText",
-        "text": ""
-     }
-  },
-  "image":{
-    "contentDescription": "",
-    "smallSourceUrl": "",
-    "largeSourceUrl": "",
-    "sources": [
-      {
-        "url": "",
-        "size": "small",
-        "widthPixels": 0,
-        "heightPixels": 0
-      },
-      {
-        "url": "",
-        "size": "large",
-        "widthPixels": 0,
-        "heightPixels": 0
-      }
-    ]
+    }
   },
   "token": "Sports"
 }
