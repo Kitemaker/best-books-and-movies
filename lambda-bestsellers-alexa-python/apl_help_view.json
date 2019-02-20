@@ -130,7 +130,6 @@
                     "direction": "column",
                     "width": "100vw",
                     "height": "100vh",
-
                     "items": [
                         {
                             "type": "Image",
@@ -153,37 +152,49 @@
                                     "paddingLeft": "70dp",
                                     "paddingRight": "70dp",
                                     "paddingBottom": "100dp",
-                                    
                                     "items": [
                                         {
-                                               "type":"TouchWrapper",
-                                                "onPress":{
-                                                "type":"SendEvent",
-                                                "arguments": ["LogoItem","LaunchTemplate",""]
-                                                },
-                                                "item":{
-                                                    "type": "AlexaHeader",
-                                                    "headerAttributionImage": "${payload.bodyTemplate2Data.logoUrl}",
-                                                    "headerTitle": "${payload.bodyTemplate2Data.title}"
-
-                                        }},
+                                            "type": "TouchWrapper",
+                                            "onPress": {
+                                                "type": "SendEvent",
+                                                "arguments": [
+                                                    "LogoItem",
+                                                    "HelpView",
+                                                    ""
+                                                ]
+                                            },
+                                            "item": {
+                                                "type": "AlexaHeader",
+                                                "headerAttributionImage": "${payload.bodyTemplate2Data.logoUrl}",
+                                                "headerTitle": "${payload.bodyTemplate2Data.title}"
+                                            }
+                                        },
                                         {
                                             "type": "Text",
                                             "text": "<b>${payload.bodyTemplate2Data.textContent.title.text}</b>",
+                                            "style": "textStyleBody",
+                                            "width": "70vw",
+                                            "textAlign": "center"
+                                        },
+                                        {
+                                            "type": "Text",
+                                            "text": "${payload.bodyTemplate2Data.textContent.primaryText1.text}",
+                                            "paddingTop": 20,
                                             "style": "textStylePrimary",
                                             "width": "70vw",
                                             "textAlign": "center"
                                         },
                                         {
                                             "type": "Text",
-                                            "text": "${payload.bodyTemplate2Data.textContent.subtitle.text}",
+                                            "text": "${payload.bodyTemplate2Data.textContent.primaryText2.text}",
+                                            "paddingTop": 20,
                                             "style": "textStylePrimary",
                                             "width": "70vw",
                                             "textAlign": "center"
                                         },
                                         {
                                             "type": "Text",
-                                            "text": "${payload.bodyTemplate2Data.textContent.primaryText.text}",
+                                            "text": "${payload.bodyTemplate2Data.textContent.primaryTex3t.text}",
                                             "paddingTop": 20,
                                             "style": "textStylePrimary",
                                             "width": "70vw",
@@ -206,27 +217,18 @@
                             "scale": "best-fill",
                             "width": "100vw",
                             "height": "100vh",
-                            "position": "absolute",
-                            "overlayColor": "rgba(0, 0, 0, 0.3)"
+                            "position": "absolute"
                         },
                         {
-                            "type":"TouchWrapper",
-                            "onPress":{
-                            "type":"SendEvent",
-                            "arguments": ["LogoItem","LaunchTemplate",""]
-                            },
-                            "item":{
                             "type": "AlexaHeader",
                             "headerTitle": "${payload.bodyTemplate2Data.title}",
                             "headerAttributionImage": "${payload.bodyTemplate2Data.logoUrl}"
-                            }
                         },
                         {
                             "type": "Container",
                             "direction": "row",
                             "paddingLeft": "60dp",
                             "paddingRight": "72dp",
-                            "paddingBottom":"80dp",
                             "grow": 1,
                             "shrink": 1,
                             "height": "100vh",
@@ -253,18 +255,18 @@
                                                 },
                                                 {
                                                     "type": "Text",
-                                                    "text": "${payload.bodyTemplate2Data.textContent.subtitle.text}",
+                                                    "text": "${payload.bodyTemplate2Data.textContent.primaryText1.text}",
                                                     "style": "textStylePrimary"
                                                 },
                                                 {
                                                     "type": "Text",
-                                                    "text": "${payload.bodyTemplate2Data.textContent.isbn.text}",
+                                                    "text": "${payload.bodyTemplate2Data.textContent.primaryText2.text}",
                                                     "style": "textStylePrimary",
                                                     "paddingTop": "10dp"
                                                 },
                                                 {
                                                     "type": "Text",
-                                                    "text": "${payload.bodyTemplate2Data.textContent.primaryText.text}",
+                                                    "text": "${payload.bodyTemplate2Data.textContent.primaryText3.text}",
                                                     "spacing": "@spacingSmall",
                                                     "paddingTop": "40dp",
                                                     "paddingRight": "70dp",
@@ -280,7 +282,8 @@
                                     "width": 340,
                                     "height": 384,
                                     "scale": "best-fit",
-                                    "align": "center"
+                                    "align": "center",
+                                    "overlayColor": "rgba(0, 0, 0, 0.3)"
                                 }
                             ]
                         },
@@ -316,46 +319,27 @@
                     }
                 ]
             },
-            "title": "",
-            "image": {
-                "contentDescription": null,
-                "smallSourceUrl": null,
-                "largeSourceUrl": null,
-                "sources": [
-                    {
-                        "url": "",
-                        "size": "small",
-                        "widthPixels": 0,
-                        "heightPixels": 0
-                    },
-                    {
-                        "url": "",
-                        "size": "large",
-                        "widthPixels": 0,
-                        "heightPixels": 0
-                    }
-                ]
-            },
+            "title": "Best Media Info",
             "textContent": {
                 "title": {
                     "type": "PlainText",
-                    "text": ""
+                    "text": "Help!"
                 },
-                "subtitle": {
+                "primaryText1": {
                     "type": "PlainText",
-                    "text": "Rank:"
+                    "text": "Best Media Info provides information about New York Times best seller books list and moview reviews, books are devided in categories for example sports, travel, and science."
                 },
-                "isbn": {
+                "primaryText2": {
                     "type": "PlainText",
-                    "text": "ISBN:"
+                    "text": "To know about books you can say <i>\"find book for sports\" </i> To know about book categories say <i>\"Get categories\"</i>"
                 },
-                "primaryText": {
+                "primaryText3": {
                     "type": "PlainText",
-                    "text": ""
+                    "text": "To get movie reviews please say <i>\"get move review\"</i>"
                 }
             },
             "logoUrl": "https://s3.amazonaws.com/aws-apl-contest/bestsellers/background/logo_512.png",
-            "hintText": "Try, \"Alexa, find book for travel at rank two\""
+            "hintText": "Try, \"Alexa, find book for travel\""
         }
     }
 }

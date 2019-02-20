@@ -152,25 +152,19 @@
                                     "alignItems": "center",
                                     "paddingLeft": "70dp",
                                     "paddingRight": "70dp",
-                                    "paddingBottom": "100dp",
-                                    
+                                     "paddingBottom":"100dp",
                                     "items": [
                                         {
-                                               "type":"TouchWrapper",
-                                                "onPress":{
-                                                "type":"SendEvent",
-                                                "arguments": ["LogoItem","LaunchTemplate",""]
-                                                },
-                                                "item":{
-                                                    "type": "AlexaHeader",
-                                                    "headerAttributionImage": "${payload.bodyTemplate2Data.logoUrl}",
-                                                    "headerTitle": "${payload.bodyTemplate2Data.title}"
-
-                                        }},
+                                          
+                                                "type": "AlexaHeader",
+                                                "headerAttributionImage": "${payload.bodyTemplate2Data.logoUrl}",
+                                                "headerTitle": "${payload.bodyTemplate2Data.title}"
+                                            
+                                        },
                                         {
                                             "type": "Text",
                                             "text": "<b>${payload.bodyTemplate2Data.textContent.title.text}</b>",
-                                            "style": "textStylePrimary",
+                                            "style": "textStyleBody",
                                             "width": "70vw",
                                             "textAlign": "center"
                                         },
@@ -206,27 +200,18 @@
                             "scale": "best-fill",
                             "width": "100vw",
                             "height": "100vh",
-                            "position": "absolute",
-                            "overlayColor": "rgba(0, 0, 0, 0.3)"
+                            "position": "absolute"
                         },
                         {
-                            "type":"TouchWrapper",
-                            "onPress":{
-                            "type":"SendEvent",
-                            "arguments": ["LogoItem","LaunchTemplate",""]
-                            },
-                            "item":{
                             "type": "AlexaHeader",
                             "headerTitle": "${payload.bodyTemplate2Data.title}",
                             "headerAttributionImage": "${payload.bodyTemplate2Data.logoUrl}"
-                            }
                         },
                         {
                             "type": "Container",
                             "direction": "row",
                             "paddingLeft": "60dp",
                             "paddingRight": "72dp",
-                            "paddingBottom":"80dp",
                             "grow": 1,
                             "shrink": 1,
                             "height": "100vh",
@@ -293,7 +278,8 @@
             ]
         }
     },
-    "datasources": {
+    "datasources":
+       {
         "bodyTemplate2Data": {
             "type": "object",
             "objectId": "bt2Sample",
@@ -316,7 +302,7 @@
                     }
                 ]
             },
-            "title": "",
+            "title": "Best Media Info",
             "image": {
                 "contentDescription": null,
                 "smallSourceUrl": null,
@@ -339,15 +325,15 @@
             "textContent": {
                 "title": {
                     "type": "PlainText",
-                    "text": ""
+                    "text": "Goodbye!"
                 },
                 "subtitle": {
                     "type": "PlainText",
-                    "text": "Rank:"
+                    "text": ""
                 },
                 "isbn": {
                     "type": "PlainText",
-                    "text": "ISBN:"
+                    "text": ""
                 },
                 "primaryText": {
                     "type": "PlainText",
@@ -355,7 +341,8 @@
                 }
             },
             "logoUrl": "https://s3.amazonaws.com/aws-apl-contest/bestsellers/background/logo_512.png",
-            "hintText": "Try, \"Alexa, find book for travel at rank two\""
+            "hintText": "Try, \"Alexa, find book for travel\""
         }
     }
+
 }
